@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { tempAction, TEMP_ACTION } from './actions';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        Hello World<button
+          onClick={() => {
+            this.props.tempAction;
+          }}
+        />
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return { temp: state.temp };
+};
+
+const mapDispatchToProps = dispatch => {
+  return { tempAction: () => dispatch({ type: TEMP_ACTION }) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
