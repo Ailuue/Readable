@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { tempAction } from '../actions';
+import { fetchCategories } from '../actions';
 import Nav from './Nav';
 import api from '../utils/api';
 
@@ -14,7 +14,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getCategories();
+    // this.getCategories();
+    this.props.fetchCat();
   }
 
   getCategories() {
@@ -28,8 +29,8 @@ class App extends Component {
       <div className="container-fluid text-center">
         <h1 className="alert alert-success">Readable</h1>
         <Nav />
-        {this.state.categories != null &&
-          this.state.categories.map(category => {
+        {this.props.categories != null &&
+          this.props.categories.map(category => {
             return (
               <div>
                 <p>{category.name}</p>
@@ -43,11 +44,11 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  return { temp: state.temp };
+  return { categories: state.tempReducer.categories };
 };
 
 const mapDispatchToProps = dispatch => {
-  return { tempAction: () => dispatch(tempAction) };
+  return { fetchCat: () => dispatch(fetchCategories()) };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
