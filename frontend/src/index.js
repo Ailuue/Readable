@@ -10,6 +10,7 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import Form from './components/Form';
 
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 const middleware = [thunk];
 middleware.push(createLogger());

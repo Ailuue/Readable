@@ -5,6 +5,25 @@ export const SET_CATEGORIES = 'SET_CATEGORIES';
 export const FETCH_POSTS = 'FETCH_POSTS';
 export const SET_POSTS = 'SET_POSTS';
 export const SET_COMMENTS = 'SET_COMMENTS';
+export const ADD_POST = 'ADD_POST';
+
+export const addPost = post => {
+  return {
+    type: ADD_POST,
+    post: post
+  };
+};
+
+export const uploadPost = post => {
+  return dispatch => {
+    axios
+      .post('http://localhost:3001/posts', post, {
+        headers: { Authorization: 'whatever-you-want' }
+      })
+      .then(dispatch(addPost(post)))
+      .catch(err => console.log);
+  };
+};
 
 export const setCategories = categories => {
   return {

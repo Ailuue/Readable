@@ -29,12 +29,33 @@ class App extends Component {
       <div className="container-fluid text-center">
         <h1 className="alert alert-success">Readable</h1>
         <Nav />
-
+        <div className="alert row">
+          <div className="col-1">
+            <p>Vote Score</p>
+          </div>
+          <div className="col-8">
+            <p>Title</p>
+          </div>
+          <div className="col-1">
+            <p>Author</p>
+          </div>
+          <div className="col-1"># of Comments</div>
+        </div>
         {this.props.posts != null &&
           this.props.posts.map(post => {
             return (
-              <div key={post.id}>
-                <p>{post.title}</p>
+              <div className="alert row" key={post.id}>
+                <div className="col">
+                  <p>{post.voteScore}</p>
+                </div>
+                <div className="col-8">
+                  <h3>{post.title}</h3>
+                </div>
+                <div className="col">
+                  <p>{post.author}</p>
+                </div>
+                <div className="col">{post.commentCount}</div>
+                <div className="col" />
               </div>
             );
           })}
