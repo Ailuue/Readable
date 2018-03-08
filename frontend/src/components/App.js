@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { fetchCategories } from '../actions';
+import { fetchCategories, fetchPosts } from '../actions';
 import Nav from './Nav';
 import api from '../utils/api';
 
@@ -16,6 +15,7 @@ class App extends Component {
   componentDidMount() {
     // this.getCategories();
     this.props.fetchCat();
+    this.props.fetchPosts();
   }
 
   getCategories() {
@@ -29,12 +29,12 @@ class App extends Component {
       <div className="container-fluid text-center">
         <h1 className="alert alert-success">Readable</h1>
         <Nav />
-        {this.props.categories != null &&
-          this.props.categories.map(category => {
+
+        {this.props.posts != null &&
+          this.props.posts.map(post => {
             return (
-              <div>
-                <p>{category.name}</p>
-                <p>{category.path}</p>
+              <div key={post.id}>
+                <p>{post.title}</p>
               </div>
             );
           })}
@@ -44,11 +44,17 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  return { categories: state.tempReducer.categories };
+  return {
+    categories: state.categoryReducer.categories,
+    posts: state.postsReducer.posts
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-  return { fetchCat: () => dispatch(fetchCategories()) };
+  return {
+    fetchCat: () => dispatch(fetchCategories()),
+    fetchPosts: () => dispatch(fetchPosts())
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

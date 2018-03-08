@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
-import tempReducer from './tempReducer';
+import categoryReducer from './categoryReducer';
+import postsReducer from './postsReducer';
 
-const rootReducer = combineReducers({ tempReducer });
+const rootReducer = combineReducers({ categoryReducer, postsReducer });
 
 export default rootReducer;

@@ -1,17 +1,35 @@
 import React, { Component } from 'react';
-import { Switch, Link, Route } from 'react-router-dom';
-import Form from './Form';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class Nav extends Component {
   render() {
+    console.log(this.props.categories);
     return (
       <nav className="navbar navbar-light bg-faded">
-        <h1 className="navbar-brand mb-0">
-          <Link to="/form">Go to form</Link>
-        </h1>
+        <div className="row">
+          <div className="col-2">
+            <Link to="/form">Add Post</Link>
+          </div>
+          <div className="col-10 row">
+            {this.props.categories != null &&
+              this.props.categories.map(category => {
+                return (
+                  <div className="col" key={category.name}>
+                    <a>{category.name}</a>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
       </nav>
     );
   }
 }
 
-export default Nav;
+const mapStateToProps = state => {
+  return {
+    categories: state.categoryReducer.categories
+  };
+};
+export default connect(mapStateToProps)(Nav);
