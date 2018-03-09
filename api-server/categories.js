@@ -18,8 +18,8 @@ const defaultData = {
       path: 'udacity'
     },
     {
-      name: 'pandas',
-      path: 'pandas'
+      name: 'other',
+      path: 'other'
     }
   ]
 };

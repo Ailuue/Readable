@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { uploadPost, fetchCategories } from '../actions';
@@ -42,35 +42,51 @@ const RenderSelect = createRenderer((input, label, { children }) => (
   <select {...input}>{children}</select>
 ));
 
-let CreatePost = props => {
-  const { handleSubmit, submitting } = props;
-  props.fetchCat();
-  return (
-    <form
-      onSubmit={handleSubmit(values => {
-        props.addPost(values);
-        props.history.push('/');
-      })}
-    >
-      <Field name="id" label="Id" component={RenderInput} />
-      <Field name="author" label="Author" component={RenderInput} />
-      <Field name="title" label="Title" component={RenderInput} />
-      <Field name="body" label="Body" component={RenderBody} />
-      <Field name="category" label="Category" component={RenderSelect}>
-        <option />
-        {props.categories &&
-          props.categories.map(category => (
-            <option key={category.name} value={category.name}>
-              {category.name}
-            </option>
-          ))}
-      </Field>
-      <button type="submit" disabled={submitting}>
-        Submit
-      </button>
-    </form>
-  );
-};
+class CreatePost extends Component {
+  componentDidMount() {
+    this.props.fetchCat();
+    console.log(this.props.categories);
+  }
+
+  render() {
+    const {
+      handleSubmit,
+      submitting,
+      addPost,
+      history,
+      categories
+    } = this.props;
+    return (
+      <form
+        onSubmit={handleSubmit(values => {
+          let date = Date.now();
+
+          values.id = date;
+          values.timestamp = date;
+          console.log(values);
+          addPost(values);
+          history.push('/');
+        })}
+      >
+        <Field name="author" label="Author" component={RenderInput} />
+        <Field name="title" label="Title" component={RenderInput} />
+        <Field name="body" label="Body" component={RenderBody} />
+        <Field name="category" label="Category" component={RenderSelect}>
+          <option />
+          {categories != null &&
+            categories.map(category => (
+              <option key={category.name} value={category.name}>
+                {category.name}
+              </option>
+            ))}
+        </Field>
+        <button type="submit" disabled={submitting}>
+          Submit
+        </button>
+      </form>
+    );
+  }
+}
 
 function validate(values) {
   const errors = {};
@@ -94,7 +110,7 @@ CreatePost = reduxForm({
 })(CreatePost);
 
 const mapStateToProps = state => {
-  categories: state.categoryReducer.categories;
+  return { categories: state.categoryReducer.categories };
 };
 
 const mapDispatchToProps = dispatch => {

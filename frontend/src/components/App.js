@@ -9,12 +9,12 @@ class App extends Component {
     super(props);
     this.state = {
       categories: null,
-      active: 'all'
+      active: 'all',
+      sortBy: 'title'
     };
   }
 
   componentDidMount() {
-    // this.getCategories();
     this.props.fetchCat();
     this.props.fetchPosts();
   }
@@ -28,6 +28,9 @@ class App extends Component {
   handleActive = name => {
     this.setState({ active: name });
   };
+  handleOrder = order => {
+    this.setState({ sortBy: order });
+  };
 
   render() {
     return (
@@ -37,39 +40,89 @@ class App extends Component {
         <div className="list-group">
           <div className="list-group-item alert row">
             <div className="col-1">
-              <p>Vote Score</p>
+              <a href="#" onClick={() => this.handleOrder('voteScore')}>
+                Vote Score
+              </a>
             </div>
-            <div className="col-8">
-              <p>Title</p>
+            <div className="col-7">
+              <a href="#" onClick={() => this.handleOrder('title')}>
+                Title
+              </a>
             </div>
             <div className="col-1">
-              <p>Author</p>
+              <a href="#" onClick={() => this.handleOrder('author')}>
+                Author
+              </a>
             </div>
-            <div className="col-1"># of Comments</div>
+            <div className="col-1">
+              <a href="#" onClick={() => this.handleOrder('comments')}>
+                # of Comments
+              </a>
+            </div>
+            <div className="col-2">
+              <a href="#" onClick={() => this.handleOrder('date')}>
+                Post Date
+              </a>
+            </div>
           </div>
 
           {this.props.posts != null &&
-            this.props.posts.map(post => {
-              if (
-                this.state.active === 'all' ||
-                this.state.active === post.category
-              )
-                return (
-                  <div className="list-group-item row" key={post.id}>
-                    <div className="col">
-                      <p>{post.voteScore}</p>
+            this.props.posts
+              .sort((a, b) => {
+                if (this.state.sortBy === 'voteScore') {
+                  if (b.voteScore < a.voteScore) return -1;
+                  if (a.voteScore < b.voteScore) return 1;
+                  else return 0;
+                }
+                if (this.state.sortBy === 'title') {
+                  if (b.title > a.title) return -1;
+                  if (a.title > b.title) return 1;
+                  else return 0;
+                }
+                if (this.state.sortBy === 'author') {
+                  if (b.author > a.author) return -1;
+                  if (a.author > b.author) return 1;
+                  else return 0;
+                }
+                if (this.state.sortBy === 'comments') {
+                  if (b.commentCount < a.commentCount) return -1;
+                  if (a.commentCount < b.commentCount) return 1;
+                  else return 0;
+                }
+                if (this.state.sortBy === 'date') {
+                  if (b.timestamp < a.timestamp) return -1;
+                  if (a.timestamp < b.timestamp) return 1;
+                  else return 0;
+                }
+              })
+              .map(post => {
+                let date = new Date(post.timestamp);
+                if (
+                  this.state.active === 'all' ||
+                  this.state.active === post.category
+                ) {
+                  return (
+                    <div className="list-group-item row" key={post.id}>
+                      <div className="col-1">
+                        <p>{post.voteScore}</p>
+                      </div>
+                      <div className="col-7">
+                        <h3>{post.title}</h3>
+                      </div>
+                      <div className="col-1">
+                        <p>{post.author}</p>
+                      </div>
+                      <div className="col-1">{post.commentCount}</div>
+
+                      <div className="col-2">
+                        <p>{date.toDateString()}</p>
+                      </div>
                     </div>
-                    <div className="col-8">
-                      <h3>{post.title}</h3>
-                    </div>
-                    <div className="col">
-                      <p>{post.author}</p>
-                    </div>
-                    <div className="col">{post.commentCount}</div>
-                    <div className="col" />
-                  </div>
-                );
-            })}
+                  );
+                } else {
+                  return;
+                }
+              })}
         </div>
       </div>
     );
