@@ -80,9 +80,20 @@ class CreatePost extends Component {
               </option>
             ))}
         </Field>
-        <button type="submit" disabled={submitting}>
-          Submit
-        </button>
+        <div className="form-group">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={submitting}
+          >
+            Submit
+          </button>
+          <Link to="/">
+            <button style={{ marginLeft: '5px' }} className="btn btn-danger">
+              Cancel
+            </button>
+          </Link>
+        </div>
       </form>
     );
   }
