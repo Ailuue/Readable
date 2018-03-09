@@ -3,8 +3,26 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Nav extends Component {
+  // state = {
+  //   active: 'all'
+  // };
+
+  // handleActive = name => {
+  //   this.setState({ active: name });
+  // };
+
+  checkActive = name => {
+    if (this.props.active === name) {
+      console.log('hi');
+      return 'alert alert-info';
+    } else {
+      return '';
+    }
+  };
+
   render() {
     console.log(this.props.categories);
+
     return (
       <nav className="navbar navbar-light bg-faded">
         <div className="row">
@@ -16,7 +34,13 @@ class Nav extends Component {
               this.props.categories.map(category => {
                 return (
                   <div className="col" key={category.name}>
-                    <a>{category.name}</a>
+                    <a
+                      href="#"
+                      className={this.checkActive(category.name)}
+                      onClick={() => this.props.handleActive(category.name)}
+                    >
+                      {category.name}
+                    </a>
                   </div>
                 );
               })}
