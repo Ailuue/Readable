@@ -30,6 +30,15 @@ class Nav extends Component {
             <Link to="/form">Add Post</Link>
           </div>
           <div className="col-10 row">
+            <div className="col">
+              <a
+                href="#"
+                className={this.checkActive('all')}
+                onClick={() => this.props.handleActive('all')}
+              >
+                all
+              </a>
+            </div>
             {this.props.categories != null &&
               this.props.categories.map(category => {
                 return (
