@@ -9,10 +9,10 @@ const setPosts = (state, action) => {
 };
 
 const addPost = (state, action) => {
-  return ({
+  return {
     ...state,
     action
-  });
+  };
 };
 
 const postsReducer = (state = initialState, action) => {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCategories, fetchPosts } from '../actions';
+import { Link } from 'react-router-dom';
 import Nav from './Nav';
 import api from '../utils/api';
 
@@ -15,7 +16,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchCat();
+    this.props.fetchCategories();
     this.props.fetchPosts();
   }
 
@@ -67,6 +68,7 @@ class App extends Component {
           </div>
 
           {this.props.posts != null &&
+            this.props.posts.length > 1 &&
             this.props.posts
               .sort((a, b) => {
                 if (this.state.sortBy === 'voteScore') {
@@ -102,22 +104,24 @@ class App extends Component {
                   this.state.active === post.category
                 ) {
                   return (
-                    <div className="list-group-item row" key={post.id}>
-                      <div className="col-1">
-                        <p>{post.voteScore}</p>
-                      </div>
-                      <div className="col-7">
-                        <h3>{post.title}</h3>
-                      </div>
-                      <div className="col-1">
-                        <p>{post.author}</p>
-                      </div>
-                      <div className="col-1">{post.commentCount}</div>
+                    <Link to={`/post/${post.id}`}>
+                      <div className="list-group-item row" key={post.id}>
+                        <div className="col-1">
+                          <p>{post.voteScore}</p>
+                        </div>
+                        <div className="col-7">
+                          <h3>{post.title}</h3>
+                        </div>
+                        <div className="col-1">
+                          <p>{post.author}</p>
+                        </div>
+                        <div className="col-1">{post.commentCount}</div>
 
-                      <div className="col-2">
-                        <p>{date.toDateString()}</p>
+                        <div className="col-2">
+                          <p>{date.toDateString()}</p>
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   );
                 } else {
                   return;
@@ -136,11 +140,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchCat: () => dispatch(fetchCategories()),
-    fetchPosts: () => dispatch(fetchPosts())
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     fetchCat: () => dispatch(fetchCategories()),
+//     fetchPosts: () => dispatch(fetchPosts())
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, { fetchCategories, fetchPosts })(App);

@@ -62,3 +62,34 @@ export const fetchPosts = () => {
       });
   };
 };
+
+export const fetchOnePost = id => {
+  return dispatch => {
+    axios
+      .get(`http://localhost:3001/posts/${id}`, {
+        headers: { Authorization: 'whatever-you-want' }
+      })
+      .then(res => {
+        dispatch(setPosts(res.data));
+      });
+  };
+};
+
+export const setComments = comments => {
+  return {
+    type: SET_COMMENTS,
+    comments: comments
+  };
+};
+
+export const fetchComments = id => {
+  return dispatch => {
+    axios
+      .get(`http://localhost:3001/posts/${id}/comments`, {
+        headers: { Authorization: 'whatever-you-want' }
+      })
+      .then(res => {
+        dispatch(setComments(res.data));
+      });
+  };
+};

@@ -9,7 +9,7 @@ import rootReducer from './reducers';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import Form from './components/Form';
-
+import Post from './components/Post';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 const middleware = [thunk];
@@ -26,6 +26,7 @@ ReactDOM.render(
       <div className="container text-center">
         <Switch>
           <Route path="/form" component={Form} />
+          <Route path="/post/:id" component={Post} />
           <Route path="/" component={App} />
         </Switch>
       </div>
