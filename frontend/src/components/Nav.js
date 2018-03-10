@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 class Nav extends Component {
   checkActive = name => {
     if (this.props.active === name) {
-      console.log('hi');
       return 'alert alert-info';
     } else {
       return '';

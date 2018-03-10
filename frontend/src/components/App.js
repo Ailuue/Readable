@@ -41,29 +41,19 @@ class App extends Component {
         <div className="list-group">
           <div className="list-group-item alert row">
             <div className="col-1">
-              <a href="#" onClick={() => this.handleOrder('voteScore')}>
-                Vote Score
-              </a>
+              <a onClick={() => this.handleOrder('voteScore')}>Vote Score</a>
             </div>
             <div className="col-7">
-              <a href="#" onClick={() => this.handleOrder('title')}>
-                Title
-              </a>
+              <a onClick={() => this.handleOrder('title')}>Title</a>
             </div>
             <div className="col-1">
-              <a href="#" onClick={() => this.handleOrder('author')}>
-                Author
-              </a>
+              <a onClick={() => this.handleOrder('author')}>Author</a>
             </div>
             <div className="col-1">
-              <a href="#" onClick={() => this.handleOrder('comments')}>
-                # of Comments
-              </a>
+              <a onClick={() => this.handleOrder('comments')}># of Comments</a>
             </div>
             <div className="col-2">
-              <a href="#" onClick={() => this.handleOrder('date')}>
-                Post Date
-              </a>
+              <a onClick={() => this.handleOrder('date')}>Post Date</a>
             </div>
           </div>
 
@@ -104,24 +94,26 @@ class App extends Component {
                   this.state.active === post.category
                 ) {
                   return (
-                    <Link to={`/post/${post.id}`}>
-                      <div className="list-group-item row" key={post.id}>
-                        <div className="col-1">
-                          <p>{post.voteScore}</p>
-                        </div>
-                        <div className="col-7">
-                          <h3>{post.title}</h3>
-                        </div>
-                        <div className="col-1">
-                          <p>{post.author}</p>
-                        </div>
-                        <div className="col-1">{post.commentCount}</div>
+                    <div key={post.id}>
+                      <Link to={`/post/${post.id}`}>
+                        <div className="list-group-item row">
+                          <div className="col-1">
+                            <p>{post.voteScore}</p>
+                          </div>
+                          <div className="col-7">
+                            <h3>{post.title}</h3>
+                          </div>
+                          <div className="col-1">
+                            <p>{post.author}</p>
+                          </div>
+                          <div className="col-1">{post.commentCount}</div>
 
-                        <div className="col-2">
-                          <p>{date.toDateString()}</p>
+                          <div className="col-2">
+                            <p>{date.toDateString()}</p>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
+                      </Link>
+                    </div>
                   );
                 } else {
                   return;
@@ -139,12 +131,5 @@ const mapStateToProps = state => {
     posts: state.postsReducer.posts
   };
 };
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     fetchCat: () => dispatch(fetchCategories()),
-//     fetchPosts: () => dispatch(fetchPosts())
-//   };
-// };
 
 export default connect(mapStateToProps, { fetchCategories, fetchPosts })(App);
