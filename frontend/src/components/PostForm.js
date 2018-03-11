@@ -59,58 +59,65 @@ class PostForm extends Component {
       categories
     } = this.props;
     return (
-      <form
-        onSubmit={handleSubmit(values => {
-          let date = Date.now();
+      <div className="card text-center card-form">
+        <form
+          onSubmit={handleSubmit(values => {
+            let date = Date.now();
 
-          values.timestamp = date;
-          
+            values.timestamp = date;
 
-          if (this.props.location.state) {
-            editPost(values, this.props.location.state.post.id);
-            history.push(`/post/${this.props.location.state.post.id}`);
-          } else {
-            values.id = date;
-            addPost(values);
-            history.push('/');
-          }
-        })}
-      >
-        <Field name="author" label="Author" component={RenderInput} />
-        <Field name="title" label="Title" component={RenderInput} />
-        <Field name="body" label="Body" component={RenderBody} />
-        <Field name="category" label="Category" component={RenderSelect}>
-          <option />
-          {categories != null &&
-            categories.map(category => (
-              <option key={category.name} value={category.name}>
-                {category.name}
-              </option>
-            ))}
-        </Field>
-        <div className="form-group">
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={submitting}
-          >
-            Submit
-          </button>
-          {this.props.location.state ? (
-            <Link to={`/post/${this.props.location.state.post.id}`}>
-              <button style={{ marginLeft: '5px' }} className="btn btn-danger">
-                Cancel
-              </button>
-            </Link>
-          ) : (
-            <Link to="/">
-              <button style={{ marginLeft: '5px' }} className="btn btn-danger">
-                Cancel
-              </button>
-            </Link>
-          )}
-        </div>
-      </form>
+            if (this.props.location.state) {
+              editPost(values, this.props.location.state.post.id);
+              history.push(`/post/${this.props.location.state.post.id}`);
+            } else {
+              values.id = date;
+              addPost(values);
+              history.push('/');
+            }
+          })}
+        >
+          <Field name="author" label="Author" component={RenderInput} />
+          <Field name="title" label="Title" component={RenderInput} />
+          <Field name="body" label="Body" component={RenderBody} />
+          <Field name="category" label="Category" component={RenderSelect}>
+            <option />
+            {categories != null &&
+              categories.map(category => (
+                <option key={category.name} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
+          </Field>
+          <div className="form-group">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={submitting}
+            >
+              Submit
+            </button>
+            {this.props.location.state ? (
+              <Link to={`/post/${this.props.location.state.post.id}`}>
+                <button
+                  style={{ marginLeft: '5px' }}
+                  className="btn btn-danger"
+                >
+                  Cancel
+                </button>
+              </Link>
+            ) : (
+              <Link to="/">
+                <button
+                  style={{ marginLeft: '5px' }}
+                  className="btn btn-danger"
+                >
+                  Cancel
+                </button>
+              </Link>
+            )}
+          </div>
+        </form>
+      </div>
     );
   }
 }

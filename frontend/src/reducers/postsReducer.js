@@ -5,14 +5,36 @@ const initialState = {
 };
 
 const setPosts = (state, action) => {
-  return action;
+  if (state.posts == null) {
+    return action;
+  } else {
+    return { ...state, action };
+  }
 };
 
 const addPost = (state, action) => {
-  return {
-    ...state,
-    action
-  };
+  if (state.posts == null) {
+    return action;
+  } else {
+    return { ...state, action };
+  }
+};
+
+const updatePosts = (state, action) => {
+  if (state.posts.length > 1) {
+    const newState = state.posts.map(post => {
+      console.log(post);
+      console.log(action);
+      if (post.id == action.post.id) {
+        return action;
+      } else {
+        return post;
+      }
+    });
+    return newState;
+  } else {
+    return action;
+  }
 };
 
 const postsReducer = (state = initialState, action) => {
@@ -24,9 +46,9 @@ const postsReducer = (state = initialState, action) => {
     case DELETE_POST:
       return state;
     case POST_VOTE:
-      console.log('hello');
-      console.log(action);
-      return { ...state };
+      // console.log(state);
+      // console.log(action);
+      return updatePosts(state, action);
     default:
       return state;
   }

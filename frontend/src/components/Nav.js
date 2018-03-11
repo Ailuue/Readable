@@ -16,7 +16,9 @@ class Nav extends Component {
       <nav className="navbar navbar-light bg-faded">
         <div className="row">
           <div className="col-2">
-            <Link to="/post/form">Add Post</Link>
+            <Link className="btn btn-info float-left" to="/post/form">
+              Add Post
+            </Link>
           </div>
           <div className="col-10 row">
             <div className="col">

@@ -166,15 +166,21 @@ export const deleteComment = (id, callback) => {
 };
 
 export const postVote = (id, vote) => {
-  axios.post(
-    `http://localhost:3001/posts/${id}`,
-    { option: vote },
-    {
-      headers: { Authorization: 'whatever-you-want' }
-    }
-  );
-  return {
-    type: POST_VOTE,
-    id: id
+  return dispatch => {
+    axios
+      .post(
+        `http://localhost:3001/posts/${id}`,
+        { option: vote },
+        {
+          headers: { Authorization: 'whatever-you-want' }
+        }
+      )
+      .then(res => {
+        dispatch({
+          type: POST_VOTE,
+          post: res.data
+        });
+      })
+      .catch(err => console.log);
   };
 };

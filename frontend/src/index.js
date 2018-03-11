@@ -9,7 +9,7 @@ import rootReducer from './reducers';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import PostForm from './components/PostForm';
-import Post from './components/Post';
+import ShowPost from './components/ShowPost';
 import CommentForm from './components/CommentForm';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
@@ -28,7 +28,7 @@ ReactDOM.render(
         <Switch>
           <Route path="/post/form" component={PostForm} />
           <Route path="/post/:id/comment/form" component={CommentForm} />
-          <Route path="/post/:id" component={Post} />
+          <Route path="/post/:id" component={ShowPost} />
           <Route path="/" component={App} />
         </Switch>
       </div>

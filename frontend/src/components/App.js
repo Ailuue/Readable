@@ -36,7 +36,8 @@ class App extends Component {
   render() {
     return (
       <div className="container-fluid text-center">
-        <h1 className="alert alert-success">Readable</h1>
+        <h1 className="alert bg-success">Readable</h1>
+        <div className="container p-4" />
         <Nav handleActive={this.handleActive} active={this.state.active} />
         <div className="list-group">
           <div className="list-group-item alert row">
@@ -96,12 +97,20 @@ class App extends Component {
                 ) {
                   return (
                     <div key={post.id}>
-                      <div className="list-group-item row">
+                      <div className="list-group-item list-group-item-warning row">
                         <div className="col-1">
-                          <button onClick={() => postVote(post.id, 'upVote')}>
+                          <button
+                            onClick={() =>
+                              this.props.postVote(post.id, 'upVote')
+                            }
+                          >
                             <i className="fas fa-angle-up fa-sm" />
                           </button>
-                          <button onClick={() => postVote(post.id, 'downVote')}>
+                          <button
+                            onClick={() =>
+                              this.props.postVote(post.id, 'downVote')
+                            }
+                          >
                             <i className="fas fa-angle-down fa-sm" />
                           </button>
                         </div>
