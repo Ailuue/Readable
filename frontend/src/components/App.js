@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCategories, fetchPosts } from '../actions';
+import { fetchCategories, fetchPosts, postVote } from '../actions';
 import { Link } from 'react-router-dom';
 import Nav from './Nav';
 import api from '../utils/api';
@@ -40,10 +40,11 @@ class App extends Component {
         <Nav handleActive={this.handleActive} active={this.state.active} />
         <div className="list-group">
           <div className="list-group-item alert row">
+            <div className="col-1" />
             <div className="col-1">
               <a onClick={() => this.handleOrder('voteScore')}>Vote Score</a>
             </div>
-            <div className="col-7">
+            <div className="col-6">
               <a onClick={() => this.handleOrder('title')}>Title</a>
             </div>
             <div className="col-1">
@@ -95,24 +96,33 @@ class App extends Component {
                 ) {
                   return (
                     <div key={post.id}>
-                      <Link to={`/post/${post.id}`}>
-                        <div className="list-group-item row">
-                          <div className="col-1">
-                            <p>{post.voteScore}</p>
-                          </div>
-                          <div className="col-7">
-                            <h3>{post.title}</h3>
-                          </div>
-                          <div className="col-1">
-                            <p>{post.author}</p>
-                          </div>
-                          <div className="col-1">{post.commentCount}</div>
-
-                          <div className="col-2">
-                            <p>{date.toDateString()}</p>
-                          </div>
+                      <div className="list-group-item row">
+                        <div className="col-1">
+                          <button onClick={() => postVote(post.id, 'upVote')}>
+                            <i className="fas fa-angle-up fa-sm" />
+                          </button>
+                          <button onClick={() => postVote(post.id, 'downVote')}>
+                            <i className="fas fa-angle-down fa-sm" />
+                          </button>
                         </div>
-                      </Link>
+                        <div className="col-1">
+                          <p>{post.voteScore}</p>
+                        </div>
+
+                        <div className="col-6">
+                          <Link to={`/post/${post.id}`}>
+                            <h3>{post.title}</h3>
+                          </Link>
+                        </div>
+                        <div className="col-1">
+                          <p>{post.author}</p>
+                        </div>
+                        <div className="col-1">{post.commentCount}</div>
+
+                        <div className="col-2">
+                          <p>{date.toDateString()}</p>
+                        </div>
+                      </div>
                     </div>
                   );
                 } else {
@@ -132,4 +142,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { fetchCategories, fetchPosts })(App);
+export default connect(mapStateToProps, {
+  fetchCategories,
+  fetchPosts,
+  postVote
+})(App);
