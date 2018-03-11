@@ -26,14 +26,14 @@ const updatePosts = (state, action) => {
       console.log(post);
       console.log(action);
       if (post.id == action.post.id) {
-        return action;
+        return action.post;
       } else {
         return post;
       }
     });
     return newState;
   } else {
-    return action;
+    return action.post;
   }
 };
 
