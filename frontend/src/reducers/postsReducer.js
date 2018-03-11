@@ -1,4 +1,4 @@
-import { SET_POSTS, ADD_POST, DELETE_POST } from '../actions/index';
+import { SET_POSTS, ADD_POST, DELETE_POST, POST_VOTE } from '../actions/index';
 
 const initialState = {
   posts: null
@@ -23,6 +23,10 @@ const postsReducer = (state = initialState, action) => {
       return addPost(state, action);
     case DELETE_POST:
       return state;
+    case POST_VOTE:
+      console.log('hello');
+      console.log(action);
+      return { ...state };
     default:
       return state;
   }

@@ -8,8 +8,9 @@ import { Provider } from 'react-redux';
 import rootReducer from './reducers';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-import Form from './components/Form';
+import PostForm from './components/PostForm';
 import Post from './components/Post';
+import CommentForm from './components/CommentForm';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 const middleware = [thunk];
@@ -25,7 +26,8 @@ ReactDOM.render(
     <BrowserRouter>
       <div className="container text-center">
         <Switch>
-          <Route path="/form" component={Form} />
+          <Route path="/post/form" component={PostForm} />
+          <Route path="/post/:id/comment/form" component={CommentForm} />
           <Route path="/post/:id" component={Post} />
           <Route path="/" component={App} />
         </Switch>

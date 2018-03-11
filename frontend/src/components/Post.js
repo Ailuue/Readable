@@ -6,7 +6,8 @@ import {
   fetchOnePost,
   fetchComments,
   deletePost,
-  deleteComment
+  deleteComment,
+  postVote
 } from '../actions';
 import { Link } from 'react-router-dom';
 
@@ -25,7 +26,9 @@ class Post extends Component {
   }
 
   onDeleteComment(id) {
-    this.props.deleteComment(id);
+    this.props.deleteComment(id, () => {
+      this.props.history.push(`/post/${this.props.match.params.id}`);
+    });
   }
 
   render() {
@@ -42,19 +45,37 @@ class Post extends Component {
               <div className="jumbotron">
                 <h3 className="display-5">{post.title}</h3>
                 <div className="row">
-                  <h4 className="lead col-4">Score: {post.voteScore}</h4>
-
+                  <div className="lead col-4">
+                    <button
+                      onClick={() =>
+                        postVote(this.props.match.params.id, 'upVote')
+                      }
+                    >
+                      Vote Up
+                    </button>
+                    <button
+                      onClick={() =>
+                        postVote(this.props.match.params.id, 'downVote')
+                      }
+                    >
+                      Vote Down
+                    </button>
+                    <h4>Score: {post.voteScore}</h4>
+                  </div>
                   <h6 className="lead col-4">Category: {post.category}</h6>
                   <h5 className="lead col-4">{date.toDateString()}</h5>
                 </div>
                 <p className="card">{post.body}</p>
               </div>
-              <button className="btn btn-success pull-xs-left">
+              <Link
+                to={`/post/${post.id}/comment/form`}
+                className="btn btn-success pull-xs-left"
+              >
                 Add Comment
-              </button>
+              </Link>
               <Link
                 to={{
-                  pathname: '/form',
+                  pathname: '/post/form',
                   state: {
                     post: post
                   }
@@ -72,39 +93,49 @@ class Post extends Component {
             </div>
           )}
         </div>
-        <div className="list-group-item" />
-        <div>
-          {comments != null &&
+        <div className="list-group">
+          {comments == null ? (
+            <p className="list-group-item">No Comments</p>
+          ) : comments.length > 0 ? (
             comments.map(comment => {
               let commentDate = new Date(comment.timestamp);
               return (
                 <div
                   key={comment.id}
-                  className="card"
+                  className="list-group-item row"
                   style={{ width: '18 rem' }}
                 >
-                  <div className="card-body">
-                    <div className="row">
-                      <p className="col-1">{comment.voteScore}</p>
-                      <h3 className="col-7">{comment.body}</h3>
-                      <p className="col-2">{comment.author}</p>
-                      <p className="col-2">{commentDate.toDateString()}</p>
-                    </div>
-                    <button className="btn btn-warning btn-sm">
-                      Edit Comment
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => this.onDeleteComment(comment.id)}
-                    >
-                      {' '}
-                      Delete Comment
-                    </button>
-                  </div>
+                  <p className="col-1">{comment.voteScore}</p>
+                  <h6 className="col-7">{comment.body}</h6>
+                  <p className="col-2">{comment.author}</p>
+                  <p className="col-2">{commentDate.toDateString()}</p>
+
+                  <Link
+                    to={{
+                      pathname: `/post/${post.id}/comment/form`,
+                      state: {
+                        comment: comment
+                      }
+                    }}
+                    className="btn btn-warning btn-sm"
+                  >
+                    Edit Comment
+                  </Link>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => this.onDeleteComment(comment.id)}
+                  >
+                    {' '}
+                    Delete Comment
+                  </button>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <p className="list-group-item">No Comments</p>
+          )}
         </div>
+
         <Link className="btn btn-primary" to="/">
           Back to Index
         </Link>
@@ -124,5 +155,6 @@ export default connect(mapStateToProps, {
   fetchOnePost,
   fetchComments,
   deletePost,
-  deleteComment
+  deleteComment,
+  postVote
 })(Post);

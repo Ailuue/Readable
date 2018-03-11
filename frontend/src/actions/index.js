@@ -9,6 +9,8 @@ export const ADD_POST = 'ADD_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const EDIT_POST = 'EDIT_POST';
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const POST_VOTE = 'POST_VOTE';
 
 export const addPost = post => {
   return {
@@ -17,8 +19,37 @@ export const addPost = post => {
   };
 };
 
+export const addComment = comment => {
+  return {
+    type: ADD_COMMENT,
+    comment: comment
+  };
+};
+
+export const uploadComment = comment => {
+  return dispatch => {
+    axios
+      .post('http://localhost:3001/comments', comment, {
+        headers: { Authorization: 'whatever-you-want' }
+      })
+      .then(dispatch(addComment(comment)))
+      .catch(err => console.log);
+  };
+};
+
+export const editComment = (comment, id) => {
+  return dispatch => {
+    axios
+      .put(`http://localhost:3001/comments/${id}`, comment, {
+        headers: { Authorization: 'whatever-you-want' }
+      })
+      .then(res => {
+        dispatch(addComment(res.data));
+      });
+  };
+};
+
 export const editPost = (post, id) => {
-  console.log(post.id);
   return dispatch => {
     axios
       .put(`http://localhost:3001/posts/${id}`, post, {
@@ -122,18 +153,28 @@ export const deletePost = (id, callback) => {
   };
 };
 
-export const deleteComplete = id => {
-  console.log(id);
-  return {
-    type: DELETE_COMMENT,
-    id: id
-  };
-};
-
-export const deleteComment = id => {
+export const deleteComment = (id, callback) => {
   axios
     .delete(`http://localhost:3001/comments/${id}`, {
       headers: { Authorization: 'whatever-you-want' }
     })
-    .then(res => deleteComplete(res.data));
+    .then(() => callback());
+
+  return {
+    type: DELETE_COMMENT
+  };
+};
+
+export const postVote = (id, vote) => {
+  axios.post(
+    `http://localhost:3001/posts/${id}`,
+    { option: vote },
+    {
+      headers: { Authorization: 'whatever-you-want' }
+    }
+  );
+  return {
+    type: POST_VOTE,
+    id: id
+  };
 };

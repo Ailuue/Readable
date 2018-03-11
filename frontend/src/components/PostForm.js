@@ -32,7 +32,7 @@ const RenderSelect = createRenderer((input, label, { children }) => (
   <select {...input}>{children}</select>
 ));
 
-class CreatePost extends Component {
+class PostForm extends Component {
   componentDidMount() {
     this.props.fetchCat();
     if (this.props.location.state) {
@@ -64,7 +64,7 @@ class CreatePost extends Component {
           let date = Date.now();
 
           values.timestamp = date;
-          console.log(values);
+          
 
           if (this.props.location.state) {
             editPost(values, this.props.location.state.post.id);
@@ -133,11 +133,11 @@ function validate(values) {
   return errors;
 }
 
-CreatePost = reduxForm({
+PostForm = reduxForm({
   // a unique name for the form
   form: 'newPost',
   validate
-})(CreatePost);
+})(PostForm);
 
 const mapStateToProps = state => {
   return { categories: state.categoryReducer.categories };
@@ -151,4 +151,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreatePost);
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm);
