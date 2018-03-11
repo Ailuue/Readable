@@ -38,7 +38,7 @@ const postsReducer = (state = initialState, action) => {
     case ADD_POST:
       return addPost(state, action);
     case DELETE_POST:
-      return state;
+      return setPosts(state, action);
     case POST_VOTE:
       // console.log(state);
       // console.log(action);

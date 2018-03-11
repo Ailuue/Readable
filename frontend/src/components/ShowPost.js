@@ -122,7 +122,7 @@ class ShowPost extends Component {
         </div>
 
         <div className="list-group">
-          {comments == null ? (
+          {comments == null || post == null ? (
             <p className="list-group-item">No Comments</p>
           ) : comments.length > 0 ? (
             comments.map(comment => {
@@ -133,28 +133,22 @@ class ShowPost extends Component {
                   className="list-group-item list-group-item-warning row"
                   style={{ width: '18 rem' }}
                 >
-                <div className="col-1">
-                      <button
-                        onClick={() =>
-                          this.props.commentVote(
-                            comment.id,
-                            'upVote'
-                          )
-                        }
-                      >
-                        <i className="fas fa-angle-up fa-sm" />
-                      </button>
-                      <button
-                        onClick={() =>
-                          this.props.commentVote(
-                            comment.id,
-                            'downVote'
-                          )
-                        }
-                      >
-                        <i className="fas fa-angle-down fa-sm" />
-                      </button>
-                    </div>
+                  <div className="col-1">
+                    <button
+                      onClick={() =>
+                        this.props.commentVote(comment.id, 'upVote')
+                      }
+                    >
+                      <i className="fas fa-angle-up fa-sm" />
+                    </button>
+                    <button
+                      onClick={() =>
+                        this.props.commentVote(comment.id, 'downVote')
+                      }
+                    >
+                      <i className="fas fa-angle-down fa-sm" />
+                    </button>
+                  </div>
                   <p className="col-1">{comment.voteScore}</p>
                   <h6 className="col-6">{comment.body}</h6>
                   <p className="col-2">{comment.author}</p>
