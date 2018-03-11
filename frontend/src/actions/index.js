@@ -27,18 +27,19 @@ export const addComment = comment => {
   };
 };
 
-export const uploadComment = comment => {
+export const uploadComment = (comment, callback) => {
   return dispatch => {
     axios
       .post('http://localhost:3001/comments', comment, {
         headers: { Authorization: 'whatever-you-want' }
       })
       .then(dispatch(addComment(comment)))
-      .catch(err => console.log);
+      .catch(err => console.log)
+      .then(() => callback());
   };
 };
 
-export const editComment = (comment, id) => {
+export const editComment = (comment, id, callback) => {
   return dispatch => {
     axios
       .put(`http://localhost:3001/comments/${id}`, comment, {
@@ -46,7 +47,8 @@ export const editComment = (comment, id) => {
       })
       .then(res => {
         dispatch(addComment(res.data));
-      });
+      })
+      .then(() => callback());
   };
 };
 

@@ -35,21 +35,21 @@ class ShowPost extends Component {
   render() {
     const { post, comments } = this.props;
     let date;
-    if (post != null) {
-      date = new Date(post.timestamp);
+    if (post && post != null) {
+      date = new Date(post[0].timestamp);
     }
     return (
       <div className="container">
         <div>
-          {post != null ? (
-            post.id && (
+          {post && post != null ? (
+            post[0].id && (
               <div>
                 <div className="jumbotron">
                   <div className="container text-center h3">
                     <u>Post</u>
                   </div>
 
-                  <h3 className="alert alert-warning">{post.title}</h3>
+                  <h3 className="alert alert-warning">{post[0].title}</h3>
                   <div className="row">
                     <div className="lead col-1">
                       <button
@@ -74,16 +74,16 @@ class ShowPost extends Component {
                       </button>
                     </div>
                     <div className="col-2">
-                      <h4>Score: {post.voteScore}</h4>
+                      <h4>Score: {post[0].voteScore}</h4>
                     </div>
                     <div className="col-1" />
-                    <h6 className="lead col-4">Category: {post.category}</h6>
+                    <h6 className="lead col-4">Category: {post[0].category}</h6>
                     <h5 className="lead col-4">{date.toDateString()}</h5>
                   </div>
-                  <p className="card alert-warning">{post.body}</p>
+                  <p className="card alert-warning">{post[0].body}</p>
                 </div>
                 <Link
-                  to={`/post/${post.id}/comment/form`}
+                  to={`/post/${post[0].id}/comment/form`}
                   className="btn btn-success pull-xs-left"
                 >
                   Add Comment
@@ -92,7 +92,7 @@ class ShowPost extends Component {
                   to={{
                     pathname: '/post/form',
                     state: {
-                      post: post
+                      post: post[0]
                     }
                   }}
                   className="btn btn-warning m-4"

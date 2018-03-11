@@ -5,7 +5,11 @@ const initialState = {
 };
 
 const setPosts = (state, action) => {
-  return action;
+  if (action.posts && action.posts[0]) {
+    return action;
+  } else {
+    return { posts: [action.posts] };
+  }
 };
 
 const addPost = (state, action) => {
@@ -38,7 +42,7 @@ const postsReducer = (state = initialState, action) => {
     case ADD_POST:
       return addPost(state, action);
     case DELETE_POST:
-      return setPosts(state, action);
+      return state;
     case POST_VOTE:
       // console.log(state);
       // console.log(action);

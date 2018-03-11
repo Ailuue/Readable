@@ -61,12 +61,15 @@ class CommentForm extends Component {
           values.parentId = this.props.match.params.id;
 
           if (this.props.location.state) {
-            editComment(values, this.props.location.state.comment.id);
+            editComment(values, this.props.location.state.comment.id, () => {
+              history.push(`/post/${this.props.match.params.id}`);
+            });
           } else {
             values.id = date;
-            addComment(values);
+            addComment(values, () => {
+              history.push(`/post/${this.props.match.params.id}`);
+            });
           }
-          history.push(`/post/${this.props.match.params.id}`);
         })}
       >
         <Field name="author" label="Author" component={RenderInput} />
@@ -112,8 +115,10 @@ CommentForm = reduxForm({
 
 const mapDispatchToProps = dispatch => {
   return {
-    addComment: comment => dispatch(uploadComment(comment)),
-    editComment: (comment, id) => dispatch(editComment(comment, id))
+    addComment: (comment, callback) =>
+      dispatch(uploadComment(comment, callback)),
+    editComment: (comment, id, callback) =>
+      dispatch(editComment(comment, id, callback))
   };
 };
 
