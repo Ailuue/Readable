@@ -34,6 +34,39 @@ class App extends Component {
   };
 
   render() {
+    const { posts } = this.props;
+    let sortedPosts;
+    if (posts != null && posts.length > 1) {
+      sortedPosts = posts.sort((a, b) => {
+        if (this.state.sortBy === 'voteScore') {
+          if (b.voteScore < a.voteScore) return -1;
+          if (a.voteScore < b.voteScore) return 1;
+          else return 0;
+        }
+        if (this.state.sortBy === 'title') {
+          if (b.title > a.title) return -1;
+          if (a.title > b.title) return 1;
+          else return 0;
+        }
+        if (this.state.sortBy === 'author') {
+          if (b.author > a.author) return -1;
+          if (a.author > b.author) return 1;
+          else return 0;
+        }
+        if (this.state.sortBy === 'comments') {
+          if (b.commentCount < a.commentCount) return -1;
+          if (a.commentCount < b.commentCount) return 1;
+          else return 0;
+        }
+        if (this.state.sortBy === 'date') {
+          if (b.timestamp < a.timestamp) return -1;
+          if (a.timestamp < b.timestamp) return 1;
+          else return 0;
+        }
+      });
+    } else {
+      sortedPosts = posts;
+    }
     return (
       <div className="container-fluid text-center">
         <h1 className="alert bg-success">Readable</h1>
@@ -59,85 +92,54 @@ class App extends Component {
             </div>
           </div>
 
-          {this.props.posts != null &&
-            this.props.posts.length > 1 &&
-            this.props.posts
-              .sort((a, b) => {
-                if (this.state.sortBy === 'voteScore') {
-                  if (b.voteScore < a.voteScore) return -1;
-                  if (a.voteScore < b.voteScore) return 1;
-                  else return 0;
-                }
-                if (this.state.sortBy === 'title') {
-                  if (b.title > a.title) return -1;
-                  if (a.title > b.title) return 1;
-                  else return 0;
-                }
-                if (this.state.sortBy === 'author') {
-                  if (b.author > a.author) return -1;
-                  if (a.author > b.author) return 1;
-                  else return 0;
-                }
-                if (this.state.sortBy === 'comments') {
-                  if (b.commentCount < a.commentCount) return -1;
-                  if (a.commentCount < b.commentCount) return 1;
-                  else return 0;
-                }
-                if (this.state.sortBy === 'date') {
-                  if (b.timestamp < a.timestamp) return -1;
-                  if (a.timestamp < b.timestamp) return 1;
-                  else return 0;
-                }
-              })
-              .map(post => {
-                let date = new Date(post.timestamp);
-                if (
-                  this.state.active === 'all' ||
-                  this.state.active === post.category
-                ) {
-                  return (
-                    <div key={post.id}>
-                      <div className="list-group-item list-group-item-warning row">
-                        <div className="col-1">
-                          <button
-                            onClick={() =>
-                              this.props.postVote(post.id, 'upVote')
-                            }
-                          >
-                            <i className="fas fa-angle-up fa-sm" />
-                          </button>
-                          <button
-                            onClick={() =>
-                              this.props.postVote(post.id, 'downVote')
-                            }
-                          >
-                            <i className="fas fa-angle-down fa-sm" />
-                          </button>
-                        </div>
-                        <div className="col-1">
-                          <p>{post.voteScore}</p>
-                        </div>
+          {posts != null &&
+            sortedPosts.map(post => {
+              let date = new Date(post.timestamp);
+              if (
+                this.state.active === 'all' ||
+                this.state.active === post.category
+              ) {
+                return (
+                  <div key={post.id}>
+                    <div className="list-group-item list-group-item-warning row">
+                      <div className="col-1">
+                        <button
+                          onClick={() => this.props.postVote(post.id, 'upVote')}
+                        >
+                          <i className="fas fa-angle-up fa-sm" />
+                        </button>
+                        <button
+                          onClick={() =>
+                            this.props.postVote(post.id, 'downVote')
+                          }
+                        >
+                          <i className="fas fa-angle-down fa-sm" />
+                        </button>
+                      </div>
+                      <div className="col-1">
+                        <p>{post.voteScore}</p>
+                      </div>
 
-                        <div className="col-6">
-                          <Link to={`/post/${post.id}`}>
-                            <h3>{post.title}</h3>
-                          </Link>
-                        </div>
-                        <div className="col-1">
-                          <p>{post.author}</p>
-                        </div>
-                        <div className="col-1">{post.commentCount}</div>
+                      <div className="col-6">
+                        <Link to={`/post/${post.id}`}>
+                          <h3>{post.title}</h3>
+                        </Link>
+                      </div>
+                      <div className="col-1">
+                        <p>{post.author}</p>
+                      </div>
+                      <div className="col-1">{post.commentCount}</div>
 
-                        <div className="col-2">
-                          <p>{date.toDateString()}</p>
-                        </div>
+                      <div className="col-2">
+                        <p>{date.toDateString()}</p>
                       </div>
                     </div>
-                  );
-                } else {
-                  return;
-                }
-              })}
+                  </div>
+                );
+              } else {
+                return;
+              }
+            })}
         </div>
       </div>
     );
