@@ -45,23 +45,26 @@ class Post extends Component {
               <div className="jumbotron">
                 <h3 className="display-5">{post.title}</h3>
                 <div className="row">
-                  <div className="lead col-4">
+                  <div className="lead col-1">
                     <button
                       onClick={() =>
                         postVote(this.props.match.params.id, 'upVote')
                       }
                     >
-                      Vote Up
+                      <i className="fas fa-angle-up fa-sm" />
                     </button>
                     <button
                       onClick={() =>
                         postVote(this.props.match.params.id, 'downVote')
                       }
                     >
-                      Vote Down
+                      <i className="fas fa-angle-down fa-sm" />
                     </button>
+                  </div>
+                  <div className="col-2">
                     <h4>Score: {post.voteScore}</h4>
                   </div>
+                  <div className="col-1" />
                   <h6 className="lead col-4">Category: {post.category}</h6>
                   <h5 className="lead col-4">{date.toDateString()}</h5>
                 </div>
