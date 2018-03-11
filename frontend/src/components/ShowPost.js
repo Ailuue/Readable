@@ -7,7 +7,8 @@ import {
   fetchComments,
   deletePost,
   deleteComment,
-  postVote
+  postVote,
+  commentVote
 } from '../actions';
 import { Link } from 'react-router-dom';
 
@@ -40,70 +41,74 @@ class ShowPost extends Component {
     return (
       <div className="container">
         <div>
-          {post != null && (
-            <div>
-              <div className="jumbotron">
-                <div className="container text-center h3">
-                  <u>Post</u>
-                </div>
+          {post != null ? (
+            post.id && (
+              <div>
+                <div className="jumbotron">
+                  <div className="container text-center h3">
+                    <u>Post</u>
+                  </div>
 
-                <h3 className="alert alert-warning">{post.title}</h3>
-                <div className="row">
-                  <div className="lead col-1">
-                    <button
-                      onClick={() =>
-                        this.props.postVote(
-                          this.props.match.params.id,
-                          'upVote'
-                        )
-                      }
-                    >
-                      <i className="fas fa-angle-up fa-sm" />
-                    </button>
-                    <button
-                      onClick={() =>
-                        this.props.postVote(
-                          this.props.match.params.id,
-                          'downVote'
-                        )
-                      }
-                    >
-                      <i className="fas fa-angle-down fa-sm" />
-                    </button>
+                  <h3 className="alert alert-warning">{post.title}</h3>
+                  <div className="row">
+                    <div className="lead col-1">
+                      <button
+                        onClick={() =>
+                          this.props.postVote(
+                            this.props.match.params.id,
+                            'upVote'
+                          )
+                        }
+                      >
+                        <i className="fas fa-angle-up fa-sm" />
+                      </button>
+                      <button
+                        onClick={() =>
+                          this.props.postVote(
+                            this.props.match.params.id,
+                            'downVote'
+                          )
+                        }
+                      >
+                        <i className="fas fa-angle-down fa-sm" />
+                      </button>
+                    </div>
+                    <div className="col-2">
+                      <h4>Score: {post.voteScore}</h4>
+                    </div>
+                    <div className="col-1" />
+                    <h6 className="lead col-4">Category: {post.category}</h6>
+                    <h5 className="lead col-4">{date.toDateString()}</h5>
                   </div>
-                  <div className="col-2">
-                    <h4>Score: {post.voteScore}</h4>
-                  </div>
-                  <div className="col-1" />
-                  <h6 className="lead col-4">Category: {post.category}</h6>
-                  <h5 className="lead col-4">{date.toDateString()}</h5>
+                  <p className="card alert-warning">{post.body}</p>
                 </div>
-                <p className="card alert-warning">{post.body}</p>
+                <Link
+                  to={`/post/${post.id}/comment/form`}
+                  className="btn btn-success pull-xs-left"
+                >
+                  Add Comment
+                </Link>
+                <Link
+                  to={{
+                    pathname: '/post/form',
+                    state: {
+                      post: post
+                    }
+                  }}
+                  className="btn btn-warning m-4"
+                >
+                  Edit Post
+                </Link>
+                <button
+                  className="btn btn-danger pull-xs-right"
+                  onClick={() => this.onDeletePost()}
+                >
+                  Delete Post
+                </button>
               </div>
-              <Link
-                to={`/post/${post.id}/comment/form`}
-                className="btn btn-success pull-xs-left"
-              >
-                Add Comment
-              </Link>
-              <Link
-                to={{
-                  pathname: '/post/form',
-                  state: {
-                    post: post
-                  }
-                }}
-                className="btn btn-warning m-4"
-              >
-                Edit Post
-              </Link>
-              <button
-                className="btn btn-danger pull-xs-right"
-                onClick={() => this.onDeletePost()}
-              >
-                Delete Post
-              </button>
-            </div>
+            )
+          ) : (
+            <div>Loading</div>
           )}
         </div>
         <div className="container text-center h3">Comments</div>
@@ -128,8 +133,30 @@ class ShowPost extends Component {
                   className="list-group-item list-group-item-warning row"
                   style={{ width: '18 rem' }}
                 >
+                <div className="col-1">
+                      <button
+                        onClick={() =>
+                          this.props.commentVote(
+                            comment.id,
+                            'upVote'
+                          )
+                        }
+                      >
+                        <i className="fas fa-angle-up fa-sm" />
+                      </button>
+                      <button
+                        onClick={() =>
+                          this.props.commentVote(
+                            comment.id,
+                            'downVote'
+                          )
+                        }
+                      >
+                        <i className="fas fa-angle-down fa-sm" />
+                      </button>
+                    </div>
                   <p className="col-1">{comment.voteScore}</p>
-                  <h6 className="col-7">{comment.body}</h6>
+                  <h6 className="col-6">{comment.body}</h6>
                   <p className="col-2">{comment.author}</p>
                   <p className="col-2">{commentDate.toDateString()}</p>
                   <div className="container">
@@ -185,5 +212,6 @@ export default connect(mapStateToProps, {
   fetchComments,
   deletePost,
   deleteComment,
-  postVote
+  postVote,
+  commentVote
 })(ShowPost);

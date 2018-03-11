@@ -11,6 +11,7 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const EDIT_POST = 'EDIT_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const POST_VOTE = 'POST_VOTE';
+export const COMMENT_VOTE = 'COMMENT_VOTE';
 
 export const addPost = post => {
   return {
@@ -180,6 +181,25 @@ export const postVote = (id, vote) => {
         dispatch({
           type: POST_VOTE,
           post: res.data
+        });
+      })
+      .catch(err => console.log);
+  };
+};
+export const commentVote = (id, vote) => {
+  return dispatch => {
+    axios
+      .post(
+        `http://localhost:3001/comments/${id}`,
+        { option: vote },
+        {
+          headers: { Authorization: 'whatever-you-want' }
+        }
+      )
+      .then(res => {
+        dispatch({
+          type: COMMENT_VOTE,
+          comment: res.data
         });
       })
       .catch(err => console.log);
