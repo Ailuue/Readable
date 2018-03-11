@@ -27,7 +27,7 @@ const updatePosts = (state, action) => {
     });
     return { posts: newState };
   } else {
-    return { posts: action.post };
+    return { posts: [action.post] };
   }
 };
 
