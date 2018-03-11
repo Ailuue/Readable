@@ -16,6 +16,17 @@ const addComment = (state, action) => {
   };
 };
 
+const deleteComment = (state, action) => {
+  if (state.comments.length > 1) {
+    const newState = state.comments.filter(comment => {
+      return comment.id != action.id;
+    });
+    return { comments: newState };
+  } else {
+    return { comments: {} };
+  }
+};
+
 const commentsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_COMMENTS:
@@ -23,7 +34,7 @@ const commentsReducer = (state = initialState, action) => {
     case ADD_COMMENT:
       return addComment(state, action);
     case DELETE_COMMENT:
-      return state;
+      return deleteComment(state, action);
     default:
       return state;
   }

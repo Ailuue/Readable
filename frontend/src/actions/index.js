@@ -161,7 +161,8 @@ export const deleteComment = (id, callback) => {
     .then(() => callback());
 
   return {
-    type: DELETE_COMMENT
+    type: DELETE_COMMENT,
+    id: id
   };
 };
 
