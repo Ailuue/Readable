@@ -22,6 +22,7 @@ const addPost = (state, action) => {
 
 const updatePosts = (state, action) => {
   if (state.posts.length > 1) {
+    const testState = Object.assign({}, ...state);
     const newState = state.posts.map(post => {
       console.log(post);
       console.log(action);
@@ -31,9 +32,9 @@ const updatePosts = (state, action) => {
         return post;
       }
     });
-    return newState;
+    return { posts: newState };
   } else {
-    return action.post;
+    return { posts: action.post };
   }
 };
 
