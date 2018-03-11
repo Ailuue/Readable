@@ -5,11 +5,7 @@ const initialState = {
 };
 
 const setPosts = (state, action) => {
-  if (state.posts == null) {
-    return action;
-  } else {
-    return { ...state, action };
-  }
+  return action;
 };
 
 const addPost = (state, action) => {
