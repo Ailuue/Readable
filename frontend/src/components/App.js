@@ -4,6 +4,8 @@ import { fetchCategories, fetchPosts, postVote } from '../actions';
 import { Link } from 'react-router-dom';
 import Nav from './Nav';
 import api from '../utils/api';
+import Header from './Header.js';
+import './App.css';
 
 class App extends Component {
   constructor(props) {
@@ -69,7 +71,7 @@ class App extends Component {
     }
     return (
       <div className="container-fluid text-center">
-        <h1 className="alert bg-success">Readable</h1>
+        <Header />
         <div className="container p-4" />
         <Nav handleActive={this.handleActive} active={this.state.active} />
         <div className="list-group">

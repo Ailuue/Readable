@@ -11,6 +11,7 @@ import {
   commentVote
 } from '../actions';
 import { Link } from 'react-router-dom';
+import Header from './Header';
 
 class ShowPost extends Component {
   componentDidMount() {
@@ -40,17 +41,18 @@ class ShowPost extends Component {
     }
     return (
       <div className="container">
+        <Header />
         <div>
           {post && post != null ? (
             post[0].id && (
               <div>
-                <div className="jumbotron">
+                <div className="">
                   <div className="container text-center h3">
                     <u>Post</u>
                   </div>
 
-                  <h3 className="alert alert-warning">{post[0].title}</h3>
-                  <div className="row">
+                  <h3 className="alert alert-warning post">{post[0].title}</h3>
+                  <div className="row postInfo">
                     <div className="lead col-1">
                       <button
                         onClick={() =>
@@ -77,8 +79,8 @@ class ShowPost extends Component {
                       <h4>Score: {post[0].voteScore}</h4>
                     </div>
                     <div className="col-1" />
-                    <h6 className="lead col-4">Category: {post[0].category}</h6>
-                    <h5 className="lead col-4">{date.toDateString()}</h5>
+                    <h4 className="col-4">Category: {post[0].category}</h4>
+                    <h4 className="col-4">{date.toDateString()}</h4>
                   </div>
                   <p className="card alert-warning">{post[0].body}</p>
                 </div>

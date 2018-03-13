@@ -1,0 +1,15 @@
+.book {
+  width: auto;
+  height: 4vw;
+  max-width: 4vw;
+  margin: 0;
+  padding: 0;
+}
+
+.banner {
+  background-color: #88bbff;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+}

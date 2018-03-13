@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { uploadComment, editComment } from '../actions';
+import Header from './Header';
 
 const createRenderer = render => ({ input, meta, label, ...rest }) => (
   <div className="form-group">
@@ -53,42 +54,45 @@ class CommentForm extends Component {
       history
     } = this.props;
     return (
-      <form
-        onSubmit={handleSubmit(values => {
-          let date = Date.now();
+      <div className="container">
+        <Header />
+        <form
+          onSubmit={handleSubmit(values => {
+            let date = Date.now();
 
-          values.timestamp = date;
-          values.parentId = this.props.match.params.id;
+            values.timestamp = date;
+            values.parentId = this.props.match.params.id;
 
-          if (this.props.location.state) {
-            editComment(values, this.props.location.state.comment.id, () => {
-              history.push(`/post/${this.props.match.params.id}`);
-            });
-          } else {
-            values.id = date;
-            addComment(values, () => {
-              history.push(`/post/${this.props.match.params.id}`);
-            });
-          }
-        })}
-      >
-        <Field name="author" label="Author" component={RenderInput} />
-        <Field name="body" label="Body" component={RenderBody} />
-        <div className="form-group">
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={submitting}
-          >
-            Submit
-          </button>
-          <Link to={`/post/${this.props.match.params.id}`}>
-            <button style={{ marginLeft: '5px' }} className="btn btn-danger">
-              Cancel
+            if (this.props.location.state) {
+              editComment(values, this.props.location.state.comment.id, () => {
+                history.push(`/post/${this.props.match.params.id}`);
+              });
+            } else {
+              values.id = date;
+              addComment(values, () => {
+                history.push(`/post/${this.props.match.params.id}`);
+              });
+            }
+          })}
+        >
+          <Field name="author" label="Author" component={RenderInput} />
+          <Field name="body" label="Body" component={RenderBody} />
+          <div className="form-group">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={submitting}
+            >
+              Submit
             </button>
-          </Link>
-        </div>
-      </form>
+            <Link to={`/post/${this.props.match.params.id}`}>
+              <button style={{ marginLeft: '5px' }} className="btn btn-danger">
+                Cancel
+              </button>
+            </Link>
+          </div>
+        </form>
+      </div>
     );
   }
 }
