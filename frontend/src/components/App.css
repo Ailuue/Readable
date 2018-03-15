@@ -2,6 +2,11 @@ body {
   background-color: #eeeeee;
 }
 
+a,
+button {
+  cursor: pointer;
+}
+
 .book {
   width: auto;
   height: 4vw;
@@ -25,4 +30,5 @@ body {
 
 .post {
   margin: 0;
+  padding: 20px;
 }

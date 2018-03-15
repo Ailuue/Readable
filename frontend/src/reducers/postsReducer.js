@@ -13,7 +13,7 @@ const setPosts = (state, action) => {
 };
 
 const addPost = (state, action) => {
-  if (state.posts == null) {
+  if (state.posts === null) {
     return action;
   } else {
     return { ...state, action };
@@ -23,7 +23,7 @@ const addPost = (state, action) => {
 const updatePosts = (state, action) => {
   if (state.posts.length > 1) {
     const newState = state.posts.map(post => {
-      if (post.id == action.post.id) {
+      if (post.id === action.post.id) {
         return action.post;
       } else {
         return post;

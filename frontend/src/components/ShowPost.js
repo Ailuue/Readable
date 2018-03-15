@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Modal from 'react-modal';
-import { Field, reduxForm } from 'redux-form';
 import {
   fetchOnePost,
   fetchComments,
@@ -82,7 +80,7 @@ class ShowPost extends Component {
                     <h4 className="col-4">Category: {post[0].category}</h4>
                     <h4 className="col-4">{date.toDateString()}</h4>
                   </div>
-                  <p className="card alert-warning">{post[0].body}</p>
+                  <p className="card alert-warning post">{post[0].body}</p>
                 </div>
                 <Link
                   to={`/post/${post[0].id}/comment/form`}
@@ -124,7 +122,7 @@ class ShowPost extends Component {
         </div>
 
         <div className="list-group">
-          {comments == null || post == null ? (
+          {comments === null || post === null ? (
             <p className="list-group-item">No Comments</p>
           ) : comments.length > 0 ? (
             comments.map(comment => {
@@ -160,7 +158,7 @@ class ShowPost extends Component {
                       <div className="p-1">
                         <Link
                           to={{
-                            pathname: `/post/${post.id}/comment/form`,
+                            pathname: `/post/${post[0].id}/comment/form`,
                             state: {
                               comment: comment
                             }

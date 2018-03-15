@@ -4,7 +4,6 @@ import {
   ADD_COMMENT,
   COMMENT_VOTE
 } from '../actions';
-import _ from 'lodash';
 
 const initialState = {
   comments: null
@@ -24,7 +23,7 @@ const addComment = (state, action) => {
 const deleteComment = (state, action) => {
   if (state.comments.length > 1) {
     const newState = state.comments.filter(comment => {
-      return comment.id != action.id;
+      return comment.id !== action.id;
     });
     return { comments: newState };
   } else {
@@ -35,7 +34,7 @@ const deleteComment = (state, action) => {
 const updateComments = (state, action) => {
   if (state.comments.length > 1) {
     const newState = state.comments.map(comment => {
-      if (comment.id == action.comment.id) {
+      if (comment.id === action.comment.id) {
         return action.comment;
       } else {
         return comment;

@@ -64,6 +64,8 @@ class App extends Component {
           if (b.timestamp < a.timestamp) return -1;
           if (a.timestamp < b.timestamp) return 1;
           else return 0;
+        } else {
+          return 0;
         }
       });
     } else {
@@ -139,7 +141,7 @@ class App extends Component {
                   </div>
                 );
               } else {
-                return;
+                return null;
               }
             })}
         </div>

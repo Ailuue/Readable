@@ -23,7 +23,6 @@ class Nav extends Component {
           <div className="col-10 row">
             <div className="col">
               <a
-                href="#"
                 className={this.checkActive('all')}
                 onClick={() => this.props.handleActive('all')}
               >
@@ -35,7 +34,6 @@ class Nav extends Component {
                 return (
                   <div className="col" key={category.name}>
                     <a
-                      href="#"
                       className={this.checkActive(category.name)}
                       onClick={() => this.props.handleActive(category.name)}
                     >

@@ -9,7 +9,8 @@ const Header = props => {
         <img
           className="book col-md-1"
           src="/image/book_icon_512.png"
-          placeholder="book icon"
+          placeholder="book logo"
+          alt="book logo"
         />
       </Link>
       <h1 className="col-md-10 title">Readable</h1>
