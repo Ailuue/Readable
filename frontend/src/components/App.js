@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import Nav from './Nav';
 import api from '../utils/api';
 import Header from './Header.js';
+import PostIndex from './PostIndex';
+import SortBy from './SortBy';
 import './App.css';
 
 class App extends Component {
@@ -35,115 +37,55 @@ class App extends Component {
     this.setState({ sortBy: order });
   };
 
+  sortPosts = posts => {
+    posts.sort((a, b) => {
+      if (this.state.sortBy === 'voteScore') {
+        if (b.voteScore < a.voteScore) return -1;
+        if (a.voteScore < b.voteScore) return 1;
+        else return 0;
+      }
+      if (this.state.sortBy === 'title') {
+        if (b.title > a.title) return -1;
+        if (a.title > b.title) return 1;
+        else return 0;
+      }
+      if (this.state.sortBy === 'author') {
+        if (b.author > a.author) return -1;
+        if (a.author > b.author) return 1;
+        else return 0;
+      }
+      if (this.state.sortBy === 'comments') {
+        if (b.commentCount < a.commentCount) return -1;
+        if (a.commentCount < b.commentCount) return 1;
+        else return 0;
+      }
+      if (this.state.sortBy === 'date') {
+        if (b.timestamp < a.timestamp) return -1;
+        if (a.timestamp < b.timestamp) return 1;
+        else return 0;
+      } else {
+        return 0;
+      }
+    });
+    return posts;
+  };
+
   render() {
     const { posts } = this.props;
-    let sortedPosts;
+
     if (posts != null && posts.length > 1) {
-      sortedPosts = posts.sort((a, b) => {
-        if (this.state.sortBy === 'voteScore') {
-          if (b.voteScore < a.voteScore) return -1;
-          if (a.voteScore < b.voteScore) return 1;
-          else return 0;
-        }
-        if (this.state.sortBy === 'title') {
-          if (b.title > a.title) return -1;
-          if (a.title > b.title) return 1;
-          else return 0;
-        }
-        if (this.state.sortBy === 'author') {
-          if (b.author > a.author) return -1;
-          if (a.author > b.author) return 1;
-          else return 0;
-        }
-        if (this.state.sortBy === 'comments') {
-          if (b.commentCount < a.commentCount) return -1;
-          if (a.commentCount < b.commentCount) return 1;
-          else return 0;
-        }
-        if (this.state.sortBy === 'date') {
-          if (b.timestamp < a.timestamp) return -1;
-          if (a.timestamp < b.timestamp) return 1;
-          else return 0;
-        } else {
-          return 0;
-        }
-      });
-    } else {
-      sortedPosts = posts;
+      this.sortPosts(posts);
     }
+
     return (
       <div className="container-fluid text-center">
         <Header />
         <div className="container p-4" />
         <Nav handleActive={this.handleActive} active={this.state.active} />
         <div className="list-group">
-          <div className="list-group-item alert row">
-            <div className="col-1" />
-            <div className="col-1">
-              <a onClick={() => this.handleOrder('voteScore')}>Vote Score</a>
-            </div>
-            <div className="col-6">
-              <a onClick={() => this.handleOrder('title')}>Title</a>
-            </div>
-            <div className="col-1">
-              <a onClick={() => this.handleOrder('author')}>Author</a>
-            </div>
-            <div className="col-1">
-              <a onClick={() => this.handleOrder('comments')}># of Comments</a>
-            </div>
-            <div className="col-2">
-              <a onClick={() => this.handleOrder('date')}>Post Date</a>
-            </div>
-          </div>
+          <SortBy handleOrder={this.handleOrder} />
 
-          {posts != null &&
-            sortedPosts.map(post => {
-              let date = new Date(post.timestamp);
-              if (
-                this.state.active === 'all' ||
-                this.state.active === post.category
-              ) {
-                return (
-                  <div key={post.id}>
-                    <div className="list-group-item list-group-item-warning row">
-                      <div className="col-1">
-                        <button
-                          onClick={() => this.props.postVote(post.id, 'upVote')}
-                        >
-                          <i className="fas fa-angle-up fa-sm" />
-                        </button>
-                        <button
-                          onClick={() =>
-                            this.props.postVote(post.id, 'downVote')
-                          }
-                        >
-                          <i className="fas fa-angle-down fa-sm" />
-                        </button>
-                      </div>
-                      <div className="col-1">
-                        <p>{post.voteScore}</p>
-                      </div>
-
-                      <div className="col-6">
-                        <Link to={`/post/${post.id}`}>
-                          <h3>{post.title}</h3>
-                        </Link>
-                      </div>
-                      <div className="col-1">
-                        <p>{post.author}</p>
-                      </div>
-                      <div className="col-1">{post.commentCount}</div>
-
-                      <div className="col-2">
-                        <p>{date.toDateString()}</p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              } else {
-                return null;
-              }
-            })}
+          <PostIndex posts={posts} active={this.state.active} />
         </div>
       </div>
     );
