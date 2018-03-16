@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCategories, fetchPosts, postVote } from '../actions';
-import { Link } from 'react-router-dom';
-import Nav from './Nav';
 import api from '../utils/api';
+import Nav from './Nav';
 import Header from './Header.js';
 import PostIndex from './PostIndex';
 import SortBy from './SortBy';

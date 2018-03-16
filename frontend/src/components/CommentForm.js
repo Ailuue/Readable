@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import { uploadComment, editComment } from '../actions';
 import Header from './Header';
 
+// Redux Form standard code "Template" according to docs/demonstrations
+
+//Html for each label/form element grouping, allowing for validation errors to display
 const createRenderer = render => ({ input, meta, label, ...rest }) => (
   <div className="form-group">
     <div
@@ -21,10 +24,12 @@ const createRenderer = render => ({ input, meta, label, ...rest }) => (
   </div>
 );
 
+//Individual renderer rules for title input
 const RenderInput = createRenderer((input, label) => (
   <input className="form-control text-center" {...input} type="text" />
 ));
 
+//Individual renderer rules for body input
 const RenderBody = createRenderer((input, label) => (
   <textarea className="form-control text-center" {...input} type="text" />
 ));
@@ -111,8 +116,8 @@ function validate(values) {
   return errors;
 }
 
+//HOC for handling the redux store
 CommentForm = reduxForm({
-  // a unique name for the form
   form: 'newComment',
   validate
 })(CommentForm);

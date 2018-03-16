@@ -5,6 +5,9 @@ import { uploadPost, fetchCategories, editPost } from '../actions';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 
+// Redux Form standard code "Template" according to docs/demonstrations
+
+//Html for each label/form element grouping, allowing for validation errors to display
 const createRenderer = render => ({ input, meta, label, ...rest }) => (
   <div className="form-group">
     <div
@@ -21,14 +24,17 @@ const createRenderer = render => ({ input, meta, label, ...rest }) => (
   </div>
 );
 
+//Individual renderer rules for author and text inputs
 const RenderInput = createRenderer((input, label) => (
   <input className="form-control text-center" {...input} type="text" />
 ));
 
+//Individual renderer rules for body text area
 const RenderBody = createRenderer((input, label) => (
   <textarea className="form-control text-center" {...input} type="text" />
 ));
 
+//Individual renderer rules for category drop-down
 const RenderSelect = createRenderer((input, label, { children }) => (
   <select {...input}>{children}</select>
 ));
@@ -144,6 +150,7 @@ function validate(values) {
   return errors;
 }
 
+//HOC to handle form redux state
 PostForm = reduxForm({
   // a unique name for the form
   form: 'newPost',
