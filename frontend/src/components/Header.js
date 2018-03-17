@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Header = props => {
+const Header = () => {
   return (
     <div className="alert container-fluid banner row">
       <Link to="/">

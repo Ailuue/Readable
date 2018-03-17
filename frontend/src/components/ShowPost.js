@@ -50,6 +50,7 @@ class ShowPost extends Component {
                   </div>
 
                   <h3 className="alert alert-warning post">{post[0].title}</h3>
+
                   <div className="row postInfo">
                     <div className="lead col-1">
                       <button
@@ -73,12 +74,15 @@ class ShowPost extends Component {
                         <i className="fas fa-angle-down fa-sm" />
                       </button>
                     </div>
-                    <div className="col-2">
-                      <h4>Score: {post[0].voteScore}</h4>
+                    <div className="col-1">
+                      <h6>Score: {post[0].voteScore}</h6>
                     </div>
-                    <div className="col-1" />
-                    <h4 className="col-4">Category: {post[0].category}</h4>
-                    <h4 className="col-4">{date.toDateString()}</h4>
+
+                    <h6 className="col-3">Author: {post[0].author}</h6>
+
+                    <h6 className="col-2">Comments: {post[0].commentCount}</h6>
+                    <h6 className="col-2">Category: {post[0].category}</h6>
+                    <h6 className="col-2">{date.toDateString()}</h6>
                   </div>
                   <p className="card alert-warning post">{post[0].body}</p>
                 </div>
@@ -92,7 +96,8 @@ class ShowPost extends Component {
                   to={{
                     pathname: '/post/form',
                     state: {
-                      post: post[0]
+                      post: post[0],
+                      origin: 'show'
                     }
                   }}
                   className="btn btn-warning m-4"

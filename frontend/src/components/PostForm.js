@@ -105,7 +105,8 @@ class PostForm extends Component {
               >
                 Submit
               </button>
-              {this.props.location.state ? (
+              {this.props.location.state &&
+              this.props.location.state.origin === 'show' ? (
                 <Link to={`/post/${this.props.location.state.post.id}`}>
                   <button
                     style={{ marginLeft: '5px' }}
