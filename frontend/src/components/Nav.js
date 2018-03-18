@@ -2,52 +2,54 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-class Nav extends Component {
-  checkActive = name => {
-    if (this.props.active === name) {
+const Nav = ({ active, handleActive, categories }) => {
+  const checkActive = name => {
+    if (active === name) {
       return 'alert alert-info';
     } else {
       return '';
     }
   };
 
-  render() {
-    return (
-      <nav className="navbar navbar-light bg-faded">
-        <div className="row">
-          <div className="col-2">
-            <Link className="btn btn-info float-left" to="/post/form">
-              Add Post
-            </Link>
-          </div>
-          <div className="col-10 row">
-            <div className="col">
+  return (
+    <nav className="navbar navbar-light bg-faded">
+      <div className="row">
+        <div className="col-2">
+          <Link className="btn btn-info float-left" to="/post/form">
+            Add Post
+          </Link>
+        </div>
+        <div className="col-10 row">
+          <div className="col">
+            <Link to="/">
               <a
-                className={this.checkActive('all')}
-                onClick={() => this.props.handleActive('all')}
+                className={checkActive('all')}
+                onClick={() => handleActive('all')}
               >
                 all
               </a>
-            </div>
-            {this.props.categories != null &&
-              this.props.categories.map(category => {
-                return (
-                  <div className="col" key={category.name}>
+            </Link>
+          </div>
+          {categories != null &&
+            categories.map(category => {
+              return (
+                <div className="col" key={category.name}>
+                  <Link to={`/${category.name}`}>
                     <a
-                      className={this.checkActive(category.name)}
-                      onClick={() => this.props.handleActive(category.name)}
+                      className={checkActive(category.name)}
+                      onClick={() => handleActive(category.name)}
                     >
                       {category.name}
                     </a>
-                  </div>
-                );
-              })}
-          </div>
+                  </Link>
+                </div>
+              );
+            })}
         </div>
-      </nav>
-    );
-  }
-}
+      </div>
+    </nav>
+  );
+};
 
 const mapStateToProps = state => {
   return {

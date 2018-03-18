@@ -1,7 +1,6 @@
 import React from 'react';
 
-const SortBy = props => {
-  const { handleOrder } = props;
+const SortBy = ({ handleOrder }) => {
   return (
     <div className="list-group-item alert row">
       <div className="col-1" />

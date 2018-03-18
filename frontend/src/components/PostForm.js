@@ -77,7 +77,11 @@ class PostForm extends Component {
 
               if (this.props.location.state) {
                 editPost(values, this.props.location.state.post.id);
-                history.push(`/post/${this.props.location.state.post.id}`);
+                history.push(
+                  `/${this.props.location.state.post.category}/${
+                    this.props.location.state.post.id
+                  }`
+                );
               } else {
                 values.id = date;
                 addPost(values);
@@ -107,7 +111,11 @@ class PostForm extends Component {
               </button>
               {this.props.location.state &&
               this.props.location.state.origin === 'show' ? (
-                <Link to={`/post/${this.props.location.state.post.id}`}>
+                <Link
+                  to={`/${this.props.location.state.post.category}/${
+                    this.props.location.state.post.id
+                  }`}
+                >
                   <button
                     style={{ marginLeft: '5px' }}
                     className="btn btn-danger"
@@ -140,13 +148,13 @@ function validate(values) {
     errors.author = 'Who is writing this?';
   }
   if (!values.title) {
-    errors.title = 'Please give your post a title!';
+    errors.title = 'Please give your post a title.';
   }
   if (!values.body) {
-    errors.body = "What's the point of a post with no content?";
+    errors.body = "Don't you want some content for your post?";
   }
   if (!values.category) {
-    errors.category = "If you don't know, choose other!";
+    errors.category = "If you're not sure, you can choose other.";
   }
   return errors;
 }

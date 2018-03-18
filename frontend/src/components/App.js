@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCategories, fetchPosts, postVote } from '../actions';
-import api from '../utils/api';
 import Nav from './Nav';
 import Header from './Header.js';
 import PostIndex from './PostIndex';
@@ -9,10 +8,9 @@ import SortBy from './SortBy';
 import './App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      categories: null,
       active: 'all',
       sortBy: 'title'
     };
@@ -21,12 +19,6 @@ class App extends Component {
   componentDidMount() {
     this.props.fetchCategories();
     this.props.fetchPosts();
-  }
-
-  getCategories() {
-    api
-      .getAll()
-      .then(res => this.setState({ categories: res.data.categories }));
   }
 
   handleActive = name => {
@@ -83,7 +75,6 @@ class App extends Component {
         <Nav handleActive={this.handleActive} active={this.state.active} />
         <div className="list-group">
           <SortBy handleOrder={this.handleOrder} />
-
           <PostIndex posts={posts} active={this.state.active} />
         </div>
       </div>

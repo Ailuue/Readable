@@ -27,8 +27,8 @@ ReactDOM.render(
       <div className="container text-center">
         <Switch>
           <Route path="/post/form" component={PostForm} />
-          <Route path="/post/:id/comment/form" component={CommentForm} />
-          <Route path="/post/:id" component={ShowPost} />
+          <Route path="/:category/:id/comment/form" component={CommentForm} />
+          <Route path="/:category/:id" component={ShowPost} />
           <Route path="/" component={App} />
         </Switch>
       </div>

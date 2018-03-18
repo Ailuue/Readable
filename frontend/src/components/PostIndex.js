@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postVote, deletePost, fetchPosts } from '../actions';
 
-const PostIndex = props => {
-  const { posts, active, postVote, deletePost, fetchPosts } = props;
-
+const PostIndex = ({ posts, active, postVote, deletePost, fetchPosts }) => {
   const onDeletePost = post => {
     const { id } = post;
     deletePost(id, () => {
@@ -36,7 +34,7 @@ const PostIndex = props => {
                   </div>
 
                   <div className="col-6">
-                    <Link to={`/post/${post.id}`}>
+                    <Link to={`/${post.category}/${post.id}`}>
                       <h3>{post.title}</h3>
                     </Link>
                   </div>

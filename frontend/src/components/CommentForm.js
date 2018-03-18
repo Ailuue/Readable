@@ -70,12 +70,20 @@ class CommentForm extends Component {
 
             if (this.props.location.state) {
               editComment(values, this.props.location.state.comment.id, () => {
-                history.push(`/post/${this.props.match.params.id}`);
+                history.push(
+                  `/${this.props.match.params.category}/${
+                    this.props.match.params.id
+                  }`
+                );
               });
             } else {
               values.id = date;
               addComment(values, () => {
-                history.push(`/post/${this.props.match.params.id}`);
+                history.push(
+                  `/${this.props.match.params.category}/${
+                    this.props.match.params.id
+                  }`
+                );
               });
             }
           })}
@@ -90,7 +98,11 @@ class CommentForm extends Component {
             >
               Submit
             </button>
-            <Link to={`/post/${this.props.match.params.id}`}>
+            <Link
+              to={`/${this.props.match.params.category}/${
+                this.props.match.params.id
+              }`}
+            >
               <button style={{ marginLeft: '5px' }} className="btn btn-danger">
                 Cancel
               </button>
@@ -110,7 +122,7 @@ function validate(values) {
   }
 
   if (!values.body) {
-    errors.body = "What's the point of a post with no content?";
+    errors.body = "Don't you want some content for your post?";
   }
 
   return errors;
