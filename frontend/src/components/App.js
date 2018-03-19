@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchCategories, fetchPosts, postVote } from '../actions';
-import Nav from './Nav';
-import Header from './Header.js';
-import PostIndex from './PostIndex';
-import SortBy from './SortBy';
-import './App.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchCategories, fetchPosts, postVote } from "../actions";
+import Nav from "./Nav";
+import Header from "./Header.js";
+import PostIndex from "./PostIndex";
+import SortBy from "./SortBy";
+import "./App.css";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      active: 'all',
-      sortBy: 'title'
+      active: "all",
+      sortBy: "title"
     };
   }
 
@@ -29,28 +29,29 @@ class App extends Component {
   };
 
   sortPosts = posts => {
-    posts.sort((a, b) => {
-      if (this.state.sortBy === 'voteScore') {
+    let copyPosts = JSON.parse(JSON.stringify(posts));
+    copyPosts.sort((a, b) => {
+      if (this.state.sortBy === "voteScore") {
         if (b.voteScore < a.voteScore) return -1;
         if (a.voteScore < b.voteScore) return 1;
         else return 0;
       }
-      if (this.state.sortBy === 'title') {
+      if (this.state.sortBy === "title") {
         if (b.title > a.title) return -1;
         if (a.title > b.title) return 1;
         else return 0;
       }
-      if (this.state.sortBy === 'author') {
+      if (this.state.sortBy === "author") {
         if (b.author > a.author) return -1;
         if (a.author > b.author) return 1;
         else return 0;
       }
-      if (this.state.sortBy === 'comments') {
+      if (this.state.sortBy === "comments") {
         if (b.commentCount < a.commentCount) return -1;
         if (a.commentCount < b.commentCount) return 1;
         else return 0;
       }
-      if (this.state.sortBy === 'date') {
+      if (this.state.sortBy === "date") {
         if (b.timestamp < a.timestamp) return -1;
         if (a.timestamp < b.timestamp) return 1;
         else return 0;
@@ -58,14 +59,14 @@ class App extends Component {
         return 0;
       }
     });
-    return posts;
+    return copyPosts;
   };
 
   render() {
     const { posts } = this.props;
-
+    let sortedPosts = [{}];
     if (posts != null && posts.length > 1) {
-      this.sortPosts(posts);
+      sortedPosts = this.sortPosts(posts);
     }
 
     return (
@@ -75,7 +76,7 @@ class App extends Component {
         <Nav handleActive={this.handleActive} active={this.state.active} />
         <div className="list-group">
           <SortBy handleOrder={this.handleOrder} />
-          <PostIndex posts={posts} active={this.state.active} />
+          <PostIndex posts={sortedPosts} active={this.state.active} />
         </div>
       </div>
     );

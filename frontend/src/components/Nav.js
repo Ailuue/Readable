@@ -21,26 +21,24 @@ const Nav = ({ active, handleActive, categories }) => {
         </div>
         <div className="col-10 row">
           <div className="col">
-            <Link to="/">
-              <a
-                className={checkActive('all')}
-                onClick={() => handleActive('all')}
-              >
-                all
-              </a>
+            <Link
+              to="/"
+              className={checkActive('all')}
+              onClick={() => handleActive('all')}
+            >
+              all
             </Link>
           </div>
           {categories != null &&
             categories.map(category => {
               return (
                 <div className="col" key={category.name}>
-                  <Link to={`/${category.name}`}>
-                    <a
-                      className={checkActive(category.name)}
-                      onClick={() => handleActive(category.name)}
-                    >
-                      {category.name}
-                    </a>
+                  <Link
+                    to={`/${category.name}`}
+                    className={checkActive(category.name)}
+                    onClick={() => handleActive(category.name)}
+                  >
+                    {category.name}
                   </Link>
                 </div>
               );
