@@ -3,7 +3,7 @@ import {
   DELETE_COMMENT,
   ADD_COMMENT,
   COMMENT_VOTE
-} from '../actions';
+} from "../actions/actionTypes";
 
 const initialState = {
   comments: null

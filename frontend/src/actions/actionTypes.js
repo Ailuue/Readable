@@ -1,0 +1,12 @@
+export const FETCH_CATEGORIES = 'FETCH_CATEGORIES';
+export const SET_CATEGORIES = 'SET_CATEGORIES';
+export const FETCH_POSTS = 'FETCH_POSTS';
+export const SET_POSTS = 'SET_POSTS';
+export const SET_COMMENTS = 'SET_COMMENTS';
+export const ADD_POST = 'ADD_POST';
+export const DELETE_POST = 'DELETE_POST';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const EDIT_POST = 'EDIT_POST';
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const POST_VOTE = 'POST_VOTE';
+export const COMMENT_VOTE = 'COMMENT_VOTE';

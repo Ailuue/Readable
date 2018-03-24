@@ -1,4 +1,9 @@
-import { SET_POSTS, ADD_POST, DELETE_POST, POST_VOTE } from '../actions/index';
+import {
+  SET_POSTS,
+  ADD_POST,
+  DELETE_POST,
+  POST_VOTE
+} from "../actions/actionTypes";
 
 const initialState = {
   posts: null

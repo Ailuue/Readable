@@ -29,7 +29,7 @@ class App extends Component {
   };
 
   sortPosts = posts => {
-    let copyPosts = JSON.parse(JSON.stringify(posts));
+    let copyPosts = [...posts];
     copyPosts.sort((a, b) => {
       if (this.state.sortBy === "voteScore") {
         if (b.voteScore < a.voteScore) return -1;
