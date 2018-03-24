@@ -16,6 +16,12 @@ class App extends Component {
     };
   }
 
+  componentWillMount() {
+    if (this.props.match.params.category) {
+      this.setState({ active: this.props.match.params.category });
+    }
+  }
+
   componentDidMount() {
     this.props.fetchCategories();
     this.props.fetchPosts();
